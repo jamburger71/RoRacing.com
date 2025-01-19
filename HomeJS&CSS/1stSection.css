@@ -23,7 +23,7 @@ section {
     justify-content: center;
     align-items: center;
     margin: auto;
-    margin-bottom: 1%;
+    margin-top: 20%;
      transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out; /* Smooth transition */
 
 
