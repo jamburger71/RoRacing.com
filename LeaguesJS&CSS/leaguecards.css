@@ -203,3 +203,8 @@ h1 {
 #oofmotorsport {
     background-color: #ff0000;
 }
+
+.customgamelinks {
+    text-decoration: underline 3px rgb(92, 0, 128);
+    color: white;
+   }
