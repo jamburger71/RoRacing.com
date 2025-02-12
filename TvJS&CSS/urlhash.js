@@ -105,7 +105,11 @@ function filterSelection(tag) {
 document.addEventListener('DOMContentLoaded', function() {
     // First convert YouTube links
     convertYouTubeList();
-    
+
+    // Handle initial URL hash (before attaching any events)
+    const hash = window.location.hash.slice(1) || 'all';
+    filterSelection(hash);  // Trigger filtering immediately
+
     // Setup filter buttons
     const buttons = document.getElementsByClassName('btn');
     for (const button of buttons) {
@@ -115,14 +119,10 @@ document.addEventListener('DOMContentLoaded', function() {
             filterSelection(tag === 'Most Recent' ? 'all' : tag);
         });
     }
-    
-    // Handle initial URL hash
-    const hash = window.location.hash.slice(1) || 'all';
-    filterSelection(hash);
 });
 
 // Handle URL hash changes
 window.addEventListener('hashchange', function() {
     const hash = window.location.hash.slice(1) || 'all';
-    filterSelection(hash);
+    setTimeout(() => filterSelection(hash), 50);  // Add a small delay to ensure everything is ready
 });
