@@ -34,9 +34,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // Listen for hash changes
+    // Ensure the filter is only applied once on load
+    let initialLoad = true;
     window.addEventListener("hashchange", applyFilterFromURL);
-
-    // Apply filter on page load after a short delay
-    setTimeout(applyFilterFromURL, 50);
+    
+    setTimeout(() => {
+        if (initialLoad) {
+            applyFilterFromURL();
+            initialLoad = false;
+        }
+    }, 50);
 });
