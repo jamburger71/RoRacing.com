@@ -1,5 +1,6 @@
 // Create a global observer that we can reuse
 let globalObserver;
+let isAnimating = false; // Flag to prevent overlapping animations
 
 // Function to create and setup the intersection observer
 function setupObserver() {
@@ -69,41 +70,78 @@ function convertYouTubeList() {
     });
 }
 
-// Function to handle filtering
-function filterSelection(tag) {
+// Function to handle filtering with animations
+function filterSelection(tag, skipAnimation = false) {
+    if (isAnimating) return; // Prevent new animations while current one is ongoing
+    
     const list = document.getElementById('youtube-list');
     if (!list) {
         console.error('YouTube list container not found!');
         return;
     }
 
-    const items = list.getElementsByTagName('li');
-    const buttons = document.querySelectorAll('#myBtnContainer .btn');
+    if (skipAnimation) {
+        // Immediate filtering without animation for initial load
+        const items = list.getElementsByTagName('li');
+        Array.from(items).forEach(item => {
+            const tags = item.getAttribute('data-tags')?.split(',') || [];
+            const shouldShow = tag.toLowerCase() === 'all' ||
+                tags.map(t => t.toLowerCase()).includes(tag.toLowerCase());
+            
+            item.style.display = shouldShow ? '' : 'none';
+            if (shouldShow) {
+                const iframe = item.querySelector('iframe');
+                if (iframe && !iframe.src && iframe.dataset.src) {
+                    globalObserver.observe(iframe);
+                }
+            }
+        });
+    } else {
+        isAnimating = true;
+        const listItems = list.querySelectorAll('li');
 
+        // First, apply the fade-out animation to all items
+        listItems.forEach((item) => {
+            item.classList.remove("fade-in");
+            item.classList.add("fade-out");
+            setTimeout(() => {
+                item.style.display = "none";
+            }, 300);
+        });
+
+        // After a short delay, filter and apply fade-in to the relevant items
+        setTimeout(() => {
+            listItems.forEach((item) => {
+                const tags = item.getAttribute('data-tags')?.split(',') || [];
+                const shouldShow = tag.toLowerCase() === 'all' ||
+                    tags.map(t => t.toLowerCase()).includes(tag.toLowerCase());
+
+                if (shouldShow) {
+                    item.style.display = "";
+                    item.classList.remove("fade-out");
+                    item.classList.add("fade-in");
+                    
+                    const iframe = item.querySelector('iframe');
+                    if (iframe && !iframe.src && iframe.dataset.src) {
+                        globalObserver.observe(iframe);
+                    }
+                }
+            });
+
+            isAnimating = false;
+        }, 350);
+    }
+
+    // Update active button state
+    const buttons = document.querySelectorAll('.btn');
     buttons.forEach(btn => {
         btn.classList.remove('active');
-        if (btn.textContent.trim() === tag || (tag === 'all' && btn.textContent.trim() === 'Most Recent')) {
+        if (btn.textContent.trim().toLowerCase() === (tag === 'all' ? 'most recent' : tag).toLowerCase()) {
             btn.classList.add('active');
         }
     });
 
-    Array.from(items).forEach(item => {
-        const tags = item.getAttribute('data-tags')?.split(',') || [];
-        const shouldShow = tag.toLowerCase() === 'all' ||
-            tags.map(t => t.toLowerCase()).includes(tag.toLowerCase());
-
-        if (shouldShow) {
-            item.style.display = '';
-            const iframe = item.querySelector('iframe');
-            if (iframe && !iframe.src && iframe.dataset.src) {
-                globalObserver.observe(iframe);
-            }
-        } else {
-            item.style.display = 'none';
-        }
-    });
-
-    // Only update URL if it's different from current hash
+    // Update URL only if hash has changed
     const currentHash = window.location.hash.slice(1).toLowerCase();
     const newHash = tag.toLowerCase();
     if (currentHash !== newHash) {
@@ -118,14 +156,15 @@ async function init() {
         
         // Get the hash after conversion is complete
         const hash = window.location.hash.slice(1).toLowerCase() || 'all';
-        filterSelection(hash);
+        // Use skipAnimation=true for initial load
+        filterSelection(hash, true);
 
         const buttons = document.querySelectorAll('#myBtnContainer .btn');
         buttons.forEach(button => {
             button.addEventListener('click', function(e) {
                 e.preventDefault();
                 const tag = this.textContent.trim();
-                filterSelection(tag === 'Most Recent' ? 'all' : tag);
+                filterSelection(tag === 'Most Recent' ? 'all' : tag, false);
             });
         });
     } catch (error) {
@@ -133,12 +172,15 @@ async function init() {
     }
 }
 
-// Wait for full page load instead of just DOMContentLoaded
+// Remove the initial filterSelection("All") call since it's handled in init
+
+// Wait for full page load
 window.addEventListener('load', init);
 
+// Handle hash changes
 window.addEventListener('hashchange', function() {
     const hash = window.location.hash.slice(1).toLowerCase() || 'all';
-    filterSelection(hash);
+    filterSelection(hash, false);
 });
 
 // Run init immediately if the page is already loaded
