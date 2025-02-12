@@ -11,7 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Find the correct button and activate it
         const clickedButton = [...buttons].find(btn => btn.textContent.trim().toLowerCase().includes(tag));
-        if (clickedButton) clickedButton.classList.add('active');
+        if (clickedButton) {
+            clickedButton.classList.add('active');
+            clickedButton.click(); // Simulate user clicking the button
+        }
 
         // Filter videos
         list.forEach(item => {
@@ -28,20 +31,15 @@ document.addEventListener("DOMContentLoaded", function () {
         const hash = window.location.hash.substring(1).toLowerCase(); // Get the hash without '#'
 
         if (hash) {
-            setTimeout(() => filterSelection(hash), 100); // Delay to prevent override
+            filterSelection(hash);
         } else {
             filterSelection('all'); // Default to 'all' only if no hash
         }
     }
 
-    // Ensure the filter is only applied once on load
-    let initialLoad = true;
+    // Listen for hash changes
     window.addEventListener("hashchange", applyFilterFromURL);
-    
-    setTimeout(() => {
-        if (initialLoad) {
-            applyFilterFromURL();
-            initialLoad = false;
-        }
-    }, 50);
+
+    // Apply filter on page load without delay
+    applyFilterFromURL();
 });
