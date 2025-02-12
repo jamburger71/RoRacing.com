@@ -1,35 +1,32 @@
 document.addEventListener("DOMContentLoaded", function () {
     function filterSelection(tag) {
-        const list = document.getElementById('youtube-list').children;
-        const buttons = document.getElementsByClassName('btn');
-        
+        const list = document.querySelectorAll('#youtube-list li');
+        const buttons = document.querySelectorAll('.btn');
+
+        // Normalize tag to lowercase for consistency
+        tag = tag.toLowerCase();
+
         // Reset button active state
-        for (const btn of buttons) {
-            btn.classList.remove('active');
-        }
-        
-        // Set the active button
-        const clickedButton = [...buttons].find(btn => btn.textContent.includes(tag));
+        buttons.forEach(btn => btn.classList.remove('active'));
+
+        // Find the correct button and activate it
+        const clickedButton = [...buttons].find(btn => btn.textContent.trim().toLowerCase().includes(tag));
         if (clickedButton) clickedButton.classList.add('active');
 
         // Filter videos
-        for (const item of list) {
-            const tags = item.getAttribute('data-tags').split(',');
+        list.forEach(item => {
+            const tags = item.getAttribute('data-tags').toLowerCase().split(',');
             if (tag === 'all' || tags.includes(tag)) {
                 item.classList.remove('hidden');
             } else {
                 item.classList.add('hidden');
             }
-        }
+        });
     }
 
     function applyFilterFromURL() {
-        const hash = window.location.hash.substring(1); // Remove the '#' from the hash
-        if (hash) {
-            filterSelection(hash);
-        } else {
-            filterSelection('all'); // Default filter
-        }
+        const hash = window.location.hash.substring(1).toLowerCase(); // Remove '#' and lowercase it
+        filterSelection(hash || 'all'); // Default to 'all'
     }
 
     // Listen for hash changes
