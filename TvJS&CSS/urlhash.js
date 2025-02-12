@@ -1,43 +1,52 @@
-// Function to handle filtering and URL updates
 function filterSelection(tag) {
-    // Get all items and buttons
     const list = document.getElementById('youtube-list').children;
-    const buttons = document.getElementsByClassName('btn');
+    const buttons = document.querySelectorAll('.btn');
     
-    // Update URL without reload
-    window.location.hash = tag.toLowerCase();
+    // Update URL hash
+    const newHash = tag.toLowerCase();
+    history.pushState(null, '', `#${newHash}`);
     
-    // Update buttons
-    for (let btn of buttons) {
-        if (btn.textContent.trim().toLowerCase() === tag.toLowerCase()) {
+    // Update button states
+    buttons.forEach(btn => {
+        if (btn.getAttribute('data-filter').toLowerCase() === tag.toLowerCase()) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
-    }
+    });
     
     // Filter items
-    for (let item of list) {
-        const tags = item.getAttribute('data-tags').split(',');
+    Array.from(list).forEach(item => {
+        const tags = item.getAttribute('data-tags')?.split(',') || [];
         if (tag.toLowerCase() === 'all' || tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())) {
-            item.style.display = '';
+            item.classList.remove('hidden');
         } else {
-            item.style.display = 'none';
+            item.classList.add('hidden');
         }
-    }
+    });
 }
 
-// Function to handle URL hash changes
+// Handle URL hash changes
 function handleHash() {
-    const hash = window.location.hash.slice(1) || 'all';
+    let hash = window.location.hash.slice(1).toLowerCase() || 'all';
     filterSelection(hash);
 }
 
-// Initialize
+// Initialize everything when the page loads
 document.addEventListener('DOMContentLoaded', function() {
+    // Add click handlers to buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const filter = this.getAttribute('data-filter');
+            filterSelection(filter);
+        });
+    });
+
     // Handle hash changes
     window.addEventListener('hashchange', handleHash);
     
-    // Initial load
+    // Initial load - handle current URL hash
     handleHash();
 });
