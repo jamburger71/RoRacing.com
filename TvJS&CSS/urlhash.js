@@ -25,13 +25,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function applyFilterFromURL() {
-        const hash = window.location.hash.substring(1).toLowerCase(); // Remove '#' and lowercase it
-        filterSelection(hash || 'all'); // Default to 'all'
+        const hash = window.location.hash.substring(1).toLowerCase(); // Get the hash without '#'
+
+        if (hash) {
+            setTimeout(() => filterSelection(hash), 100); // Delay to prevent override
+        } else {
+            filterSelection('all'); // Default to 'all' only if no hash
+        }
     }
 
     // Listen for hash changes
     window.addEventListener("hashchange", applyFilterFromURL);
 
-    // Apply filter on page load
-    applyFilterFromURL();
+    // Apply filter on page load after a short delay
+    setTimeout(applyFilterFromURL, 50);
 });
