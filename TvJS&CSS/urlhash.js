@@ -60,7 +60,7 @@ function filterSelection(tag) {
     const items = list.getElementsByTagName('li');
     const buttons = document.getElementsByClassName('btn');
     
-    // Update button states
+    // Update button states if the button exists
     for (const btn of buttons) {
         btn.classList.remove('active');
     }
