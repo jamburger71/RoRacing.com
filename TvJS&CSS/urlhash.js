@@ -1,50 +1,101 @@
 // Store the current filter state
 let currentFilter = 'all';
 
-function filterSelection(tag) {
-    // Prevent default
-    event?.preventDefault();
+// Function to convert normal YouTube URLs into embedded videos with lazy loading
+function convertYouTubeList() {
+    const listContainer = document.getElementById('youtube-list');
     
-    // Update current filter
+    if (!listContainer) return;
+
+    const listItems = listContainer.querySelectorAll('li');
+    
+    // Function to handle loading iframes as they come into viewport
+    const loadIframe = (iframe, observer) => {
+        if (!iframe.src && iframe.dataset.src) {
+            iframe.src = iframe.dataset.src;
+        }
+        observer.unobserve(iframe);
+    };
+
+    // Create intersection observer for lazy loading
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const iframe = entry.target;
+                loadIframe(iframe, observer);
+
+                const nextItem = iframe.closest('li').nextElementSibling;
+                if (nextItem) {
+                    const nextIframe = nextItem.querySelector('iframe');
+                    if (nextIframe) {
+                        observer.observe(nextIframe);
+                    }
+                }
+            }
+        });
+    }, { threshold: 0.1 });
+
+    // Process each list item
+    listItems.forEach(item => {
+        const url = item.textContent.trim();
+        const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+        const match = youtubeRegex.exec(url);
+
+        if (match) {
+            const videoId = match[1];
+            
+            // Create iframe but don't load yet
+            const iframe = document.createElement('iframe');
+            iframe.dataset.src = `https://www.youtube.com/embed/${videoId}`;
+            iframe.width = '560';
+            iframe.height = '315';
+            iframe.frameBorder = '0';
+            iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+            iframe.allowFullscreen = true;
+
+            // Clear and append
+            item.textContent = '';
+            item.appendChild(iframe);
+            
+            // Start observing
+            observer.observe(iframe);
+        }
+    });
+}
+
+// Function to handle filtering
+function filterSelection(tag) {
+    event?.preventDefault();
     currentFilter = tag.toLowerCase();
     
-    // Get all list items and buttons
-    const list = document.getElementById('youtube-list').children;
+    const list = document.getElementById('youtube-list');
+    const items = list.getElementsByTagName('li');
     const buttons = document.getElementsByClassName('btn');
     
-    // Reset button active state
+    // Update button states
     for (const btn of buttons) {
         btn.classList.remove('active');
     }
     
-    // Set the active button
     const clickedButton = [...buttons].find(btn => 
         btn.textContent.trim().toLowerCase().includes(currentFilter));
     if (clickedButton) clickedButton.classList.add('active');
 
-    // Filter videos - using display block/none instead of hidden class
-    for (const item of list) {
+    // Filter items
+    for (const item of items) {
         const tags = item.getAttribute('data-tags')?.split(',') || [];
         if (currentFilter === 'all' || tags.map(t => t.toLowerCase()).includes(currentFilter)) {
-            item.style.display = 'block'; // or whatever display value you normally use
-            // Also try removing any hide classes that might exist
-            item.classList.remove('hidden', 'hide', 'd-none');
+            item.style.display = '';
+            // Trigger intersection observer by scrolling slightly
+            window.scrollBy(0, 1);
+            window.scrollBy(0, -1);
         } else {
             item.style.display = 'none';
-            // Add hide class if you're using one
-            item.classList.add('hidden');
         }
-        
-        // Log for debugging
-        console.log(`Item ${item.id || 'unknown'}: tags=${tags}, visibility=${item.style.display}`);
     }
     
-    // Update URL without triggering reload
+    // Update URL
     history.pushState(null, '', `#${currentFilter}`);
-    
-    // Log current state
-    console.log('Current filter:', currentFilter);
-    console.log('Visible items:', [...list].filter(item => item.style.display !== 'none').length);
 }
 
 // Handle URL hash changes
@@ -55,13 +106,16 @@ function handleUrlHash() {
 
 // Initialize everything
 document.addEventListener('DOMContentLoaded', function() {
-    // Remove any existing click handlers
+    // First convert YouTube links
+    convertYouTubeList();
+    
+    // Setup filter buttons
     const buttons = document.getElementsByClassName('btn');
     for (const button of buttons) {
         button.replaceWith(button.cloneNode(true));
     }
     
-    // Add new click handlers
+    // Add click handlers
     const newButtons = document.getElementsByClassName('btn');
     for (const button of newButtons) {
         button.addEventListener('click', function(e) {
@@ -75,11 +129,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle hash changes
     window.addEventListener('hashchange', handleUrlHash);
     
-    // Set initial state from URL or default to 'all'
+    // Set initial state
     const initialHash = window.location.hash.slice(1).toLowerCase() || 'all';
     currentFilter = initialHash;
     filterSelection(initialHash);
-    
-    // Log initial state
-    console.log('Initialization complete. Initial filter:', currentFilter);
 });
