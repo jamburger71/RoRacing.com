@@ -60,4 +60,8 @@ body {
       white-space: nowrap; /* Prevent text wrapping inside buttons */
     }
   }
+
+  .hidden {
+    display: none !important;
+  }
   
