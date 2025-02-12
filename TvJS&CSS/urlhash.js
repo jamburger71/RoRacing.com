@@ -30,6 +30,11 @@ function convertYouTubeList() {
         const listItems = listContainer.querySelectorAll('li');
         let processedItems = 0;
 
+        if (listItems.length === 0) {
+            resolve();
+            return;
+        }
+
         listItems.forEach(item => {
             if (item.querySelector('iframe')) {
                 processedItems++;
@@ -98,29 +103,45 @@ function filterSelection(tag) {
         }
     });
 
-    history.pushState(null, '', `#${tag.toLowerCase()}`);
+    // Only update URL if it's different from current hash
+    const currentHash = window.location.hash.slice(1).toLowerCase();
+    const newHash = tag.toLowerCase();
+    if (currentHash !== newHash) {
+        history.pushState(null, '', `#${newHash}`);
+    }
 }
 
 // Initialize everything
 async function init() {
-    await convertYouTubeList();
-    
-    const hash = window.location.hash.slice(1) || 'all';
-    filterSelection(hash);
+    try {
+        await convertYouTubeList();
+        
+        // Get the hash after conversion is complete
+        const hash = window.location.hash.slice(1).toLowerCase() || 'all';
+        filterSelection(hash);
 
-    const buttons = document.querySelectorAll('#myBtnContainer .btn');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const tag = this.textContent.trim();
-            filterSelection(tag === 'Most Recent' ? 'all' : tag);
+        const buttons = document.querySelectorAll('#myBtnContainer .btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tag = this.textContent.trim();
+                filterSelection(tag === 'Most Recent' ? 'all' : tag);
+            });
         });
-    });
+    } catch (error) {
+        console.error('Initialization error:', error);
+    }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+// Wait for full page load instead of just DOMContentLoaded
+window.addEventListener('load', init);
 
 window.addEventListener('hashchange', function() {
-    const hash = window.location.hash.slice(1) || 'all';
+    const hash = window.location.hash.slice(1).toLowerCase() || 'all';
     filterSelection(hash);
 });
+
+// Run init immediately if the page is already loaded
+if (document.readyState === 'complete') {
+    init();
+}
