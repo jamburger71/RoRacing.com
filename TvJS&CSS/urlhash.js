@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
         const clickedButton = [...buttons].find(btn => btn.textContent.trim().toLowerCase().includes(tag));
         if (clickedButton) {
             clickedButton.classList.add('active');
-            clickedButton.click(); // Simulate user clicking the button
         }
 
         // Filter videos
