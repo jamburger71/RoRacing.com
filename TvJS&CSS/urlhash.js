@@ -1,9 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     function activateFilterFromHash() {
-        // Get the hash from the URL (without the #) and normalize it
-        let hash = window.location.hash.substring(1).toLowerCase();
+        // Get the hash from the URL and clean it
+        let hash = window.location.hash.substring(1).toLowerCase(); // Remove '#' and lowercase
+        
+        if (!hash) {
+            filterSelection('all'); // Default if no hash is present
+            return;
+        }
 
-        // Ensure proper case for matching filterSelection function
+        // Standardize filter text (capitalize first letter)
         let filter = hash.charAt(0).toUpperCase() + hash.slice(1);
 
         // Get all buttons
@@ -12,23 +17,23 @@ document.addEventListener("DOMContentLoaded", function () {
         // Remove 'active' class from all buttons
         buttons.forEach(button => button.classList.remove("active"));
 
-        // Find and activate the corresponding button
+        // Find the matching button
         let targetButton = Array.from(buttons).find(button => 
             button.textContent.trim().toLowerCase() === filter.toLowerCase()
         );
 
+        // Activate button and apply filter
         if (targetButton) {
             targetButton.classList.add("active");
             filterSelection(filter);
         } else {
-            // Default to 'all' if no match is found
-            filterSelection('all');
+            filterSelection('all'); // Fallback if no match
         }
     }
 
-    // Run on page load
+    // Ensure the function runs on page load
     activateFilterFromHash();
 
-    // Listen for hash changes
+    // Listen for URL hash changes dynamically
     window.addEventListener("hashchange", activateFilterFromHash);
 });
