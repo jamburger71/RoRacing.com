@@ -17,7 +17,7 @@ function setupObserver() {
 }
 
 // Function to convert YouTube URLs to embeds
-function convertYouTubeList() {
+function convertYouTubeList(callback) {
     const listContainer = document.getElementById('youtube-list');
     if (!listContainer) return;
 
@@ -52,6 +52,9 @@ function convertYouTubeList() {
             globalObserver.observe(iframe);
         }
     });
+
+    // Run the callback after YouTube links are converted and the iframes are ready
+    if (callback) callback();
 }
 
 // Function to handle filtering
@@ -103,22 +106,22 @@ function filterSelection(tag) {
 
 // Initialize everything
 document.addEventListener('DOMContentLoaded', function() {
-    // Convert YouTube links first
-    convertYouTubeList();
+    // Convert YouTube links first, then handle filtering
+    convertYouTubeList(() => {
+        // Handle initial URL hash (before attaching any events)
+        const hash = window.location.hash.slice(1) || 'all';
+        filterSelection(hash);  // Trigger filtering immediately after converting iframes
 
-    // Handle initial URL hash (before attaching any events)
-    const hash = window.location.hash.slice(1) || 'all';
-    filterSelection(hash);  // Trigger filtering immediately after converting iframes
-
-    // Setup filter buttons
-    const buttons = document.getElementsByClassName('btn');
-    for (const button of buttons) {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const tag = this.textContent.trim();
-            filterSelection(tag === 'Most Recent' ? 'all' : tag);
-        });
-    }
+        // Setup filter buttons
+        const buttons = document.getElementsByClassName('btn');
+        for (const button of buttons) {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tag = this.textContent.trim();
+                filterSelection(tag === 'Most Recent' ? 'all' : tag);
+            });
+        }
+    });
 });
 
 // Handle URL hash changes
