@@ -1,39 +1,40 @@
 document.addEventListener("DOMContentLoaded", function () {
-    function activateFilterFromHash() {
-        // Get the hash from the URL and clean it
-        let hash = window.location.hash.substring(1).toLowerCase(); // Remove '#' and lowercase
+    function filterSelection(tag) {
+        const list = document.getElementById('youtube-list').children;
+        const buttons = document.getElementsByClassName('btn');
         
-        if (!hash) {
-            filterSelection('all'); // Default if no hash is present
-            return;
+        // Reset button active state
+        for (const btn of buttons) {
+            btn.classList.remove('active');
         }
+        
+        // Set the active button
+        const clickedButton = [...buttons].find(btn => btn.textContent.includes(tag));
+        if (clickedButton) clickedButton.classList.add('active');
 
-        // Standardize filter text (capitalize first letter)
-        let filter = hash.charAt(0).toUpperCase() + hash.slice(1);
-
-        // Get all buttons
-        let buttons = document.querySelectorAll("#myBtnContainer .btn");
-
-        // Remove 'active' class from all buttons
-        buttons.forEach(button => button.classList.remove("active"));
-
-        // Find the matching button
-        let targetButton = Array.from(buttons).find(button => 
-            button.textContent.trim().toLowerCase() === filter.toLowerCase()
-        );
-
-        // Activate button and apply filter
-        if (targetButton) {
-            targetButton.classList.add("active");
-            filterSelection(filter);
-        } else {
-            filterSelection('all'); // Fallback if no match
+        // Filter videos
+        for (const item of list) {
+            const tags = item.getAttribute('data-tags').split(',');
+            if (tag === 'all' || tags.includes(tag)) {
+                item.classList.remove('hidden');
+            } else {
+                item.classList.add('hidden');
+            }
         }
     }
 
-    // Ensure the function runs on page load
-    activateFilterFromHash();
+    function applyFilterFromURL() {
+        const hash = window.location.hash.substring(1); // Remove the '#' from the hash
+        if (hash) {
+            filterSelection(hash);
+        } else {
+            filterSelection('all'); // Default filter
+        }
+    }
 
-    // Listen for URL hash changes dynamically
-    window.addEventListener("hashchange", activateFilterFromHash);
+    // Listen for hash changes
+    window.addEventListener("hashchange", applyFilterFromURL);
+
+    // Apply filter on page load
+    applyFilterFromURL();
 });
