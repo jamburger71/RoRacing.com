@@ -21,7 +21,7 @@ function convertYouTubeList() {
     const listContainer = document.getElementById('youtube-list');
     if (!listContainer) return;
 
-    setupObserver();
+    setupObserver(); // Set up the observer here to ensure it works immediately
     const listItems = listContainer.querySelectorAll('li');
 
     listItems.forEach(item => {
@@ -103,12 +103,12 @@ function filterSelection(tag) {
 
 // Initialize everything
 document.addEventListener('DOMContentLoaded', function() {
-    // First convert YouTube links
+    // Convert YouTube links first
     convertYouTubeList();
 
     // Handle initial URL hash (before attaching any events)
     const hash = window.location.hash.slice(1) || 'all';
-    filterSelection(hash);  // Trigger filtering immediately
+    filterSelection(hash);  // Trigger filtering immediately after converting iframes
 
     // Setup filter buttons
     const buttons = document.getElementsByClassName('btn');
