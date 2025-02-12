@@ -183,7 +183,54 @@ body {
     
 <script>
 
+let isAnimating = false; // Flag to prevent overlapping animations
 
+function filterSelection(tag) {
+    if (isAnimating) return; // Prevent new animations while the current one is ongoing
+    isAnimating = true;
+
+    const listItems = document.querySelectorAll("#youtube-list li");
+
+    // First, apply the fade-out animation to all items
+    listItems.forEach((item) => {
+        item.classList.remove("fade-in"); // Ensure the fade-in class is removed
+        item.classList.add("fade-out"); // Add the fade-out class to all items
+        setTimeout(() => {
+            item.style.display = "none"; // Hide the item after fade-out animation
+        }, 300); // Duration of fade-out animation
+    });
+
+    // After a short delay, filter and apply fade-in to the relevant items
+    setTimeout(() => {
+        listItems.forEach((item) => {
+            const shouldShow = tag === "all" || (item.dataset.tags && item.dataset.tags.includes(tag));
+
+            if (shouldShow) {
+                item.style.display = ""; // Revert the display to make it visible
+                item.classList.remove("fade-out"); // Remove fade-out class
+                item.classList.add("fade-in"); // Apply fade-in animation
+            }
+        });
+
+        // Update the active button
+        const buttons = document.querySelectorAll(".btn");
+        buttons.forEach((button) => button.classList.remove("active"));
+
+        const activeButton = Array.from(buttons).find((button) =>
+            button.textContent.trim().toLowerCase() === (tag === "all" ? "most recent" : tag.toLowerCase())
+        );
+
+        if (activeButton) {
+            activeButton.classList.add("active");
+        }
+
+        // Reset the animation flag after animations complete
+        isAnimating = false;
+    }, 350); // Wait until all items have been hidden before showing the filtered items
+}
+
+// Initial call to show all videos
+filterSelection("All");
 
 </script>
 </body>
