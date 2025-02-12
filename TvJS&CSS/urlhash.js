@@ -1,61 +1,78 @@
-// Wait for the page to load
-document.addEventListener('DOMContentLoaded', function() {
-    // Get the container and add click listeners to all buttons
-    const container = document.getElementById('myBtnContainer');
-    if (container) {
-        container.addEventListener('click', function(e) {
-            if (e.target.classList.contains('btn')) {
-                const filter = e.target.textContent.trim();
-                handleFilter(filter);
-            }
-        });
-    }
+// Store the current filter state
+let currentFilter = 'all';
 
-    // Handle URL changes
-    window.addEventListener('hashchange', function() {
-        const hash = window.location.hash.slice(1);
-        if (hash) {
-            handleFilter(hash);
+function filterSelection(tag) {
+    // Prevent default filter to 'all'
+    event.preventDefault();
+    
+    // Update current filter
+    currentFilter = tag.toLowerCase();
+    
+    const list = document.getElementById('youtube-list').children;
+    const buttons = document.getElementsByClassName('btn');
+    
+    // Reset button active state
+    for (const btn of buttons) {
+        btn.classList.remove('active');
+    }
+    
+    // Set the active button
+    const clickedButton = [...buttons].find(btn => 
+        btn.textContent.trim().toLowerCase().includes(currentFilter));
+    if (clickedButton) clickedButton.classList.add('active');
+
+    // Filter videos
+    for (const item of list) {
+        const tags = item.getAttribute('data-tags')?.split(',') || [];
+        if (currentFilter === 'all' || tags.map(t => t.toLowerCase()).includes(currentFilter)) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
         }
-    });
-
-    // Check initial URL
-    const initialHash = window.location.hash.slice(1);
-    if (initialHash) {
-        handleFilter(initialHash);
     }
+    
+    // Update URL without triggering reload
+    history.pushState(null, '', `#${currentFilter}`);
+}
+
+// Handle URL hash changes
+function handleUrlHash() {
+    const hash = window.location.hash.slice(1).toLowerCase() || currentFilter;
+    filterSelection(hash);
+}
+
+// Initialize everything
+document.addEventListener('DOMContentLoaded', function() {
+    // Remove any existing click handlers
+    const buttons = document.getElementsByClassName('btn');
+    for (const button of buttons) {
+        button.replaceWith(button.cloneNode(true));
+    }
+    
+    // Add new click handlers
+    const newButtons = document.getElementsByClassName('btn');
+    for (const button of newButtons) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            const tag = this.textContent.trim();
+            filterSelection(tag === 'Most Recent' ? 'all' : tag);
+        }, true);
+    }
+    
+    // Handle hash changes
+    window.addEventListener('hashchange', handleUrlHash);
+    
+    // Set initial state from URL or default to 'all'
+    const initialHash = window.location.hash.slice(1).toLowerCase() || 'all';
+    currentFilter = initialHash;
+    filterSelection(initialHash);
 });
 
-function handleFilter(filter) {
-    // Log for debugging
-    console.log('Filtering by:', filter);
-
-    // Get all buttons and items
-    const buttons = document.getElementsByClassName('btn');
-    const items = document.getElementById('youtube-list').children;
-
-    // Update buttons
-    for (let btn of buttons) {
-        if (btn.textContent.trim().toLowerCase() === filter.toLowerCase()) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
+// Prevent any automatic reversion to 'all'
+window.addEventListener('load', function(e) {
+    e.preventDefault();
+    if (currentFilter !== 'all') {
+        setTimeout(() => filterSelection(currentFilter), 100);
     }
-
-    // Update URL
-    history.pushState(null, '', `#${filter.toLowerCase()}`);
-
-    // Filter items
-    for (let item of items) {
-        const tags = item.getAttribute('data-tags');
-        if (!tags) continue;
-
-        if (filter.toLowerCase() === 'most recent' || 
-            tags.toLowerCase().includes(filter.toLowerCase())) {
-            item.style.display = '';
-        } else {
-            item.style.display = 'none';
-        }
-    }
-}
+});
