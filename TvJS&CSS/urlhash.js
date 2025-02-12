@@ -106,7 +106,7 @@ async function init() {
     await convertYouTubeList();
     
     // Add 4 second delay before filtering
-    await new Promise(resolve => setTimeout(resolve, 4000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     const hash = window.location.hash.slice(1) || 'all';
     filterSelection(hash);
