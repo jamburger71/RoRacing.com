@@ -1,52 +1,61 @@
-function filterSelection(tag) {
-    const list = document.getElementById('youtube-list').children;
-    const buttons = document.querySelectorAll('.btn');
-    
-    // Update URL hash
-    const newHash = tag.toLowerCase();
-    history.pushState(null, '', `#${newHash}`);
-    
-    // Update button states
-    buttons.forEach(btn => {
-        if (btn.getAttribute('data-filter').toLowerCase() === tag.toLowerCase()) {
+// Wait for the page to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Get the container and add click listeners to all buttons
+    const container = document.getElementById('myBtnContainer');
+    if (container) {
+        container.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn')) {
+                const filter = e.target.textContent.trim();
+                handleFilter(filter);
+            }
+        });
+    }
+
+    // Handle URL changes
+    window.addEventListener('hashchange', function() {
+        const hash = window.location.hash.slice(1);
+        if (hash) {
+            handleFilter(hash);
+        }
+    });
+
+    // Check initial URL
+    const initialHash = window.location.hash.slice(1);
+    if (initialHash) {
+        handleFilter(initialHash);
+    }
+});
+
+function handleFilter(filter) {
+    // Log for debugging
+    console.log('Filtering by:', filter);
+
+    // Get all buttons and items
+    const buttons = document.getElementsByClassName('btn');
+    const items = document.getElementById('youtube-list').children;
+
+    // Update buttons
+    for (let btn of buttons) {
+        if (btn.textContent.trim().toLowerCase() === filter.toLowerCase()) {
             btn.classList.add('active');
         } else {
             btn.classList.remove('active');
         }
-    });
-    
+    }
+
+    // Update URL
+    history.pushState(null, '', `#${filter.toLowerCase()}`);
+
     // Filter items
-    Array.from(list).forEach(item => {
-        const tags = item.getAttribute('data-tags')?.split(',') || [];
-        if (tag.toLowerCase() === 'all' || tags.map(t => t.toLowerCase()).includes(tag.toLowerCase())) {
-            item.classList.remove('hidden');
+    for (let item of items) {
+        const tags = item.getAttribute('data-tags');
+        if (!tags) continue;
+
+        if (filter.toLowerCase() === 'most recent' || 
+            tags.toLowerCase().includes(filter.toLowerCase())) {
+            item.style.display = '';
         } else {
-            item.classList.add('hidden');
+            item.style.display = 'none';
         }
-    });
+    }
 }
-
-// Handle URL hash changes
-function handleHash() {
-    let hash = window.location.hash.slice(1).toLowerCase() || 'all';
-    filterSelection(hash);
-}
-
-// Initialize everything when the page loads
-document.addEventListener('DOMContentLoaded', function() {
-    // Add click handlers to buttons
-    const buttons = document.querySelectorAll('.btn');
-    buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
-            e.preventDefault();
-            const filter = this.getAttribute('data-filter');
-            filterSelection(filter);
-        });
-    });
-
-    // Handle hash changes
-    window.addEventListener('hashchange', handleHash);
-    
-    // Initial load - handle current URL hash
-    handleHash();
-});
