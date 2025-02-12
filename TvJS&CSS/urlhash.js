@@ -2,12 +2,13 @@
 let currentFilter = 'all';
 
 function filterSelection(tag) {
-    // Prevent default filter to 'all'
-    event.preventDefault();
+    // Prevent default
+    event?.preventDefault();
     
     // Update current filter
     currentFilter = tag.toLowerCase();
     
+    // Get all list items and buttons
     const list = document.getElementById('youtube-list').children;
     const buttons = document.getElementsByClassName('btn');
     
@@ -21,18 +22,29 @@ function filterSelection(tag) {
         btn.textContent.trim().toLowerCase().includes(currentFilter));
     if (clickedButton) clickedButton.classList.add('active');
 
-    // Filter videos
+    // Filter videos - using display block/none instead of hidden class
     for (const item of list) {
         const tags = item.getAttribute('data-tags')?.split(',') || [];
         if (currentFilter === 'all' || tags.map(t => t.toLowerCase()).includes(currentFilter)) {
-            item.classList.remove('hidden');
+            item.style.display = 'block'; // or whatever display value you normally use
+            // Also try removing any hide classes that might exist
+            item.classList.remove('hidden', 'hide', 'd-none');
         } else {
+            item.style.display = 'none';
+            // Add hide class if you're using one
             item.classList.add('hidden');
         }
+        
+        // Log for debugging
+        console.log(`Item ${item.id || 'unknown'}: tags=${tags}, visibility=${item.style.display}`);
     }
     
     // Update URL without triggering reload
     history.pushState(null, '', `#${currentFilter}`);
+    
+    // Log current state
+    console.log('Current filter:', currentFilter);
+    console.log('Visible items:', [...list].filter(item => item.style.display !== 'none').length);
 }
 
 // Handle URL hash changes
@@ -67,12 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const initialHash = window.location.hash.slice(1).toLowerCase() || 'all';
     currentFilter = initialHash;
     filterSelection(initialHash);
-});
-
-// Prevent any automatic reversion to 'all'
-window.addEventListener('load', function(e) {
-    e.preventDefault();
-    if (currentFilter !== 'all') {
-        setTimeout(() => filterSelection(currentFilter), 100);
-    }
+    
+    // Log initial state
+    console.log('Initialization complete. Initial filter:', currentFilter);
 });
