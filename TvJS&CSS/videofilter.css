@@ -64,4 +64,8 @@ body {
   .hidden {
     display: none !important;
   }
+
+  .btnhidden {
+    display: none !important;
+  }
   
