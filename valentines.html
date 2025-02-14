@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="LeaguesJS&CSS/leaguecards.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    
+    <link rel="stylesheet" href="topnav.css">
+    <link rel="stylesheet" href="LeaguesJS&CSS/searchbar.css">
+    <script src="LeaguesJS&CSS/searchbar.js"></script>
+    <script src="topnav.js"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9VMH52ZHE"></script>
+    <link rel="icon" href="Images/favicon.png" type="image/png">
+<link rel="shortcut icon" href="Images/favicon.png" type="image/png">
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-Q9VMH52ZHE');
+    </script>
+    <title>Leagues</title>
+    <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #ff00ea;
+        margin: 0;
+        padding: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        background-image: 
+                radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1px); /* Dots pattern */
+            background-size: 20px 20px; /* Dot size and spacing */
+            background-position: center; /* Center the dot pattern */
+            background-repeat: repeat; /* Repeat the dots pattern across the page */
+    }
+
+    
+
+    .spantitle {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    font-size: 55px;
+    font-weight: 500;
+    color: rgb(220, 220, 220);
+    text-shadow: 0px 0px 18px rgb(109, 109, 109);
+    text-decoration-line: underline;
+    -webkit-text-decoration-line: underline;
+    text-decoration-color: red;
+    -webkit-text-decoration-color: red;
+}
+
+.h1title {
+    font-size: 65px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 250px;
+    color: white;
+}
+
+.sponsored {
+    font-size: 15px;
+    margin-top: -10%;
+    position: flex;
+    text-align: left;
+    margin-left: 13px;
+    color: rgb(255, 255, 255);
+}
+
+/* Phone Big  */
+@media (min-width: 700px) and (max-width: 950px) {
+    .h1title {
+    font-size: 35px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 250px;
+    color: white;
+}
+
+.spantitle {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    font-size: 35px;
+    font-weight: 500;
+    color: rgb(220, 220, 220);
+    text-shadow: 0px 0px 18px rgb(109, 109, 109);
+    text-decoration-line: underline;
+    -webkit-text-decoration-line: underline;
+    text-decoration-color: red;
+    -webkit-text-decoration-color: red;
+}
+}
+
+/* Phone Small */
+@media (min-width: 300px) and (max-width: 699px) {
+    .h1title {
+    font-size: 35px;
+    margin: 0;
+    font-weight: 400;
+    text-align: center;
+    padding-top: 250px;
+    color: white;
+}
+
+.spantitle {
+    transition: transform 0.5s ease, opacity 0.5s ease;
+    font-size: 35px;
+    font-weight: 500;
+    color: rgb(220, 220, 220);
+    text-shadow: 0px 0px 18px rgb(109, 109, 109);
+    text-decoration-line: underline;
+    -webkit-text-decoration-line: underline;
+    text-decoration-color: red;
+    -webkit-text-decoration-color: red;
+}
+
+    
+    
+}
+    
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="logo">
+            <img src="Images/RoRacing.comLogo.png" alt="Logo" class="logo-img">
+          </a>
+          <img src="Images/RoRacing.comLogoFull.png" class="logofull">
+        <ul class="nav-links" id="nav-links">
+          <li><a href="home"><i class="fa fa-home"></i> Home</a></li>
+    
+          <li><a href="leagues"><i class="fa-solid fa-trophy"></i> Leagues</a></li>
+    
+          <li><a href="tv"><i class="fa-solid fa-tv"></i> TV</a></li>
+    
+          <li><a href="invworks"><i class="fa-solid fa-cart-shopping"></i> Accessories</a></li>
+    
+          <li><a href="https://discord.gg/Z49TUtFE9M"><i class="fa-brands fa-discord"></i> Discord</a></li>
+    
+          
+    
+    
+    
+        </ul>
+        <a href="javascript:void(0);" class="icon fafa-bars">
+          <i class="fa fa-bars" id="fafa-bars"></i>
+        </a>
+      </nav>
+
+      <h1 class="h1title">Find your own <span class="spantitle">league.</span></h1>
+
+      <div class="searchbarcontainer">
+      <input type="text" id="searchBar" placeholder="Search Leagues...">
+      <div id="filters">
+          <button class="filter-btn active" data-filter="all">Show all</button>
+          <button class="filter-btn" data-filter="Single-Seater">Single-Seater</button>
+          <button class="filter-btn" data-filter="Endurance">Endurance</button>
+          <button class="filter-btn" data-filter="Touring">Touring</button>
+          <button class="filter-btn" data-filter="Nascar">Nascar</button>
+          <button class="filter-btn" data-filter="Rally">Rally</button>
+          <button class="filter-btn" data-filter="Multi-Class">Multi-Class</button>
+      </div>
+    </div>
+
+
+
+    <div class="container">
+
+
+        <div class="card" data-class="Multi-Class first">
+            <img data-src="Images/LeagueIMGs/OM.png" loading="lazy">
+            <h1 class="sponsored">Sponsored</h1>
+            <hr class="hrinbetweenimgsponsored">
+            <div class="card-content">
+                <h1 class="card-title">OM</h1>
+                <h2 class="card-subtitle">OOF MOTORSPORTS</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Days</span>
+                        <span>Fri/Sat/Sun</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Custom</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Multi-Class</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.com/invite/CXxJXkg3U2" target="_blank" class="view-button" id="oofmotorsport"><i class="fa-brands fa-discord"></i></a>
+                
+            </div>
+        </div>
+
+        <div class="card" data-class="Rally">
+            <img data-src="Images/LeagueIMGs/MMFWRC.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">MMF WRC</h1>
+                <h2 class="card-subtitle">MULTI-MOTORSPORT FEDERATION WRC</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 10:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Custom</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Rally</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.com/invite/gb6hCbDkCA" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Endurance">
+            <img data-src="Images/LeagueIMGs/IMRP.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">IMRP</h1>
+                <h2 class="card-subtitle">INTERNATIONAL MOTOR RACING PROJECT</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 11:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/16709087765/IMRP-New-Driver-Testing-Game" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Endurance</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/PRYnzs7EXh" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/PATL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PATL</h1>
+                <h2 class="card-subtitle">PROJECT APEX TRAINING LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 08:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/ZWnQbUSS" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/PARE.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PARE</h1>
+                <h2 class="card-subtitle">PROJECT APEX RACING ELITE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 18:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/vYd2zwQe4p" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Nascar">
+            <img data-src="Images/LeagueIMGs/NTCS.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">NTCS</h1>
+                <h2 class="card-subtitle">NASCAR TARGET CUP SERIES</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 19:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Custom</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>Tank</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Nascar</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/rzmF389N2G" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/FWC.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FWC</h1>
+                <h2 class="card-subtitle">FORMULA WORLD CHAMPIONSHIP</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 14:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/tXrh4Uwc8v" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Multi-Class">
+            <img data-src="Images/LeagueIMGs/PIM.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PIM</h1>
+                <h2 class="card-subtitle">PROJECT INTERNATIONALE MOTORSPORTS</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 13:30</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/16374472380/Project-Motorsports-V1-1-3A-Alpha" target="_blank" class="customgamelinks">Project Motorsports</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Multi-Class</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/pHYYSNCXqz" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/PGSS.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PGSS</h1>
+                <h2 class="card-subtitle">PROJECT APEX GRAND SLAM SERIES</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 09:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/K9bXSSa7JS" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/PALI.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PALI</h1>
+                <h2 class="card-subtitle">PROJECT APEX LEAGUE INTERNATIONAL</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 07:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/TNHxrbEt3X" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+      
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/PASL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">PASL</h1>
+                <h2 class="card-subtitle">PROJECT APEX SPRINT LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 13:10</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/hHU352b9zw" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/RCF1.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">RCF1</h1>
+                <h2 class="card-subtitle">ROBLOX CLUB FORMULA ONE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 04:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/BwJXr4B6nT" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Multi-Class">
+            <img data-src="Images/LeagueIMGs/BMRL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">BMRL</h1>
+                <h2 class="card-subtitle">BLURIE MULTI-RACING LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Fri/Sat/Sun</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Multi-Game</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>Multi-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Multi-Class</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/dtR6Z3qBPt" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/FUL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FUL</h1>
+                <h2 class="card-subtitle">FORMULA ULTIMATE LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 16:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/p3vd3rjVM5" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Nascar">
+            <img data-src="Images/LeagueIMGs/DIVIZIONAL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">DIVISIONAL.</h1>
+                <h2 class="card-subtitle">STOCK CAR RACING LEAGUE.</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Fri/Sat, 23:30</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Custom</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>Tank</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Nascar</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/grMBvaHpk8" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/XFA.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">XFA</h1>
+                <h2 class="card-subtitle">XFA Formula 1</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 15:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/sf4UaEwaWA" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Multi-Class">
+            <img data-src="Images/LeagueIMGs/FBA.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FBA</h1>
+                <h2 class="card-subtitle">FBA RACING</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 19:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/18846996796/FBA-RACING-SPANISH-GP" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Multi-Class</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/AKyZMT6AjP" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/FERL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FERL</h1>
+                <h2 class="card-subtitle">FORMULA ELECTRIFIED RACING LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 19:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/17263587551/Update-FERL-2025" target="_blank" class="customgamelinks">FERL 2025</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/Q9RPmBCSVn" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/FX.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FX</h1>
+                <h2 class="card-subtitle">FORMULA X</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 18:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span>Custom</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/zSEtErd3ya" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Touring">
+            <img data-src="Images/LeagueIMGs/VDTM.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">VDTM</h1>
+                <h2 class="card-subtitle">VELOCITY DTM</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 18:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/72813550177146/VELOCITY-DTM-DRIVER-TESTING" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Touring</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.com/invite/KfHWEwmM93" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Endurance">
+            <img data-src="Images/LeagueIMGs/RSCA.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">RSCA</h1>
+                <h2 class="card-subtitle">ROBLOX SPORTS CAR ASSOCIATION</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sat/Sun, 18:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/9482934198/RSCA-Proving-Grounds" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Endurance</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/kPyGwJ6p9x" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Endurance">
+            <img data-src="Images/LeagueIMGs/WSC.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">WSC</h1>
+                <h2 class="card-subtitle">WORLD SPORTS CAR CHAMPIONSHIP</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 15:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/75778502786656/Driver-Testing-Oschersleben-Grand-Prix" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Endurance</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/Q9J3azMFsZ" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Nascar">
+            <img data-src="Images/LeagueIMGs/VRL.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">VRL</h1>
+                <h2 class="card-subtitle">VELOCITY RACING LEAGUE</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Fri/Sat/Sun, 12:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/7709878065/RoStock-Racing" target="_blank" class="customgamelinks">RoStock Racing</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>Tank</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Nascar</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/GNYxrCHWJ4" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Single-Seater">
+            <img data-src="Images/LeagueIMGs/APEX07.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">APEX07</h1>
+                <h2 class="card-subtitle">APEX 2007</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Sunday, 15:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/5976159288/UPDATE-Formula-Apex-Racing" target="_blank" class="customgamelinks">Project Apex</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>A-Chassis</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Single-Seater</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/GbHnUGFBxe" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+        <div class="card" data-class="Nascar">
+            <img data-src="Images/LeagueIMGs/FRA.webp" loading="lazy">
+            <hr class="hrinbetweenimg">
+            <div class="card-content">
+                <h1 class="card-title">FRA</h1>
+                <h2 class="card-subtitle">FRA CUP SERIES</h2>
+
+                <div class="info">
+                    <div class="info-item">
+                        <span  id="cardboldh1"><i class="fi fi-rs-calendar-clock"></i> Race Times (GMT)</span>
+                        <span>Saturday, 22:00</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-filter"></i> Game Type</span>
+                        <span><a href="https://www.roblox.com/games/121461693173049/FRA-Race-Hub" target="_blank" class="customgamelinks">Custom</a></span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-engine"></i> Chassis Type</span>
+                        <span>Tank</span>
+                    </div>
+                    
+                    <hr class="hrinbetweeninfo">
+                    <div class="info-item">
+                        <span id="cardboldh1"><i class="fi fi-rs-car"></i> Class</span>
+                        <span>Nascar</span>
+                    </div>
+                    <hr class="hrinbetweeninfo">
+                    <br>
+                    <br>
+                </div>
+                <a href="https://discord.gg/jgMkp4ZhPW" target="_blank" class="view-button"><i class="fa-brands fa-discord"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+    <br>
+    <script>
+
+
+    </script>
+</body>
+</html>
